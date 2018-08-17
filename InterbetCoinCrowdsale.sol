@@ -11,8 +11,8 @@ contract InterbetCoinCrowdsale {
     uint constant ibcTokenDecimals = 18; // Decimal places of IBC
 
     token public tokenReward = token(0xCBbb6861423440170680b538d136FfE17A4b661a); // IBC token contract
-    address public beneficiary = 0x560b989db52368696bDC1db587eA52787Fdc3406;
-    address public admin = 0x8dd4866a5BaB83e1e2433e6e74B8385D12b838A3;
+    address public beneficiary = 0x560b989db52368696bDC1db587eA52787Fdc3406; // Interbet team
+    address public admin = 0x8dd4866a5BaB83e1e2433e6e74B8385D12b838A3; // Crowdsale admin
 
     /* Events */
     event FundTransfer(SaleStage indexed saleStage, address indexed contributor, uint amount, bool isContribution);
@@ -30,13 +30,13 @@ contract InterbetCoinCrowdsale {
 
     SaleStage public currentSaleStage;
 
-    uint public minFundInEther = 10 * 1 finney; // ?inimum funding for Presale and ICO
+    uint public minFundInEther = 10 * 1 finney; // Minimum contribution for Presale and ICO
 
     uint public presalePrice = 10000; // Base price of Presale: 10,000 IBC = 1 ETH
     uint public presaleFundingTargetInEther = 3000 * 1 ether; // 3,000 ETH target of Presale
 
     uint public breakDurationBetweenPresaleAndICO = 1 weeks; // A short break for preparing ICO
-    uint public icoPhaseTimeInterval = 1 weeks; // Same interval between ICO's three phases
+    uint public icoPhaseTimeInterval = 1 weeks; // Interval of ICO phases
 
     uint public icoStart; // ICO starts one week after Presale ended
     uint public icoTimeBonusPhase1End; // ICO's phase 1 end
@@ -52,7 +52,7 @@ contract InterbetCoinCrowdsale {
     uint public icoPhase3TimeBonusInPercentage = 0; // No bonus for ICO's phase 3
     uint public icoFundingRatePredictionBonusInPercentage = 25; // 25% bonus for predicting the correct final funding rate
 
-    uint public fundingRatePredictionBonusClaimWindow = 4 weeks; // After this window, the whole pool of prediction bonus tokens will be destroyed
+    uint public fundingRatePredictionBonusClaimWindow = 4 weeks; // After this window, the remaining pool of prediction bonus tokens will be destroyed
 
     uint public etherRaised = 0; // All ether contributed
     uint public ibcFunded = 0; // Counting only the tokens distributed before ICO ended, without counting funding rate prediction bonus
@@ -61,7 +61,7 @@ contract InterbetCoinCrowdsale {
 
     mapping(address => uint256) public balanceOf; // Ether contributed
     mapping(address => uint256) public ibcVaultBalanceOf; // IBC hold in vault
-    mapping(address => uint256) public baseRewardTokenBalanceOf; // Without counting any bonus
+    mapping(address => uint256) public baseRewardTokenBalanceOf; // IBC base reward without counting any bonus
 
     mapping(address => uint256) public fundingRatePredictionOf; // The funding rate prediction
     mapping(address => bool) public fundingRatePredictionBingoOf; // Bingo or not
@@ -210,7 +210,7 @@ contract InterbetCoinCrowdsale {
         return timeBonusInPercentage;
     }
 
-    /// Claim your IBC
+    /// Claim IBC
     function claimToken() external {
         require(currentSaleStage == SaleStage.ICO || currentSaleStage == SaleStage.Closed);
         if (currentSaleStage == SaleStage.ICO) {
@@ -300,7 +300,7 @@ contract InterbetCoinCrowdsale {
         }
     }
 
-    /// Burn the whole pool of prediction bonus tokens
+    /// Burn the remaining pool of prediction bonus tokens
     function burnAllRemainingIBC() external {
         require(currentSaleStage == SaleStage.Closed);
 

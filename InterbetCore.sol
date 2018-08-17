@@ -3,8 +3,8 @@ pragma solidity 0.4.24;
 contract InterbetCore {
 
 	/* Global constants */
-	uint constant oddsDecimals = 2;
-	uint constant feeRateDecimals = 1;
+	uint constant oddsDecimals = 2; // Max. decimal places of odds
+	uint constant feeRateDecimals = 1; // Max. decimal places of fee rate
 
 	uint public minMakerBetFund = 100 * 1 finney; // Minimum fund of a maker bet
 
